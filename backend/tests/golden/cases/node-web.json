@@ -1,0 +1,9 @@
+{
+  "name": "node-web",
+  "repo": "sample-node",
+  "request": "Create CI for this Node project: run eslint and jest tests.",
+  "options": {"platform": "github", "publish": false},
+  "snapshot": "snapshot.json",
+  "expected_ir": "node-web.ir.json",
+  "expected_renders": {"github": "node-web.github.yml"}
+}

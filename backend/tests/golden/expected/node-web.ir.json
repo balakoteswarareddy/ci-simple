@@ -1,0 +1,237 @@
+{
+  "env": {},
+  "evidence_requirements": [],
+  "gates": [
+    {
+      "config": {
+        "approvals": [],
+        "decision": "ALLOW",
+        "deny": [],
+        "evaluator": "local"
+      },
+      "id": "policy",
+      "type": "policy"
+    }
+  ],
+  "jobs": [
+    {
+      "artifacts": [],
+      "environment": "",
+      "id": "lint",
+      "name": "Lint",
+      "needs": [],
+      "permissions": {
+        "contents": "read"
+      },
+      "runs_on": "ubuntu-latest",
+      "steps": [
+        {
+          "capability": "",
+          "condition": "",
+          "env": {},
+          "id": "lint-s1",
+          "name": "Checkout",
+          "run": "",
+          "tool": "",
+          "uses": "actions/checkout@v4",
+          "with_args": {}
+        },
+        {
+          "capability": "",
+          "condition": "",
+          "env": {},
+          "id": "lint-s2",
+          "name": "Set up node",
+          "run": "",
+          "tool": "setup",
+          "uses": "actions/setup-node@v4",
+          "with_args": {
+            "ecosystem": "node",
+            "node-version": "20",
+            "version": "20"
+          }
+        },
+        {
+          "capability": "lint",
+          "condition": "",
+          "env": {},
+          "id": "lint-s3",
+          "name": "Install eslint",
+          "run": "npm install --save-dev eslint@9.0.0",
+          "tool": "eslint",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "",
+          "env": {},
+          "id": "lint-s4",
+          "name": "Run eslint",
+          "run": "npx eslint .",
+          "tool": "eslint",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "hashFiles('.github/workflows/*.yml', '.github/workflows/*.yaml') != ''",
+          "env": {},
+          "id": "lint-s5",
+          "name": "Install and run actionlint",
+          "run": "mkdir -p $HOME/.local/bin && curl -sSfL -o /tmp/actionlint.dl https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz && (tar -xzf /tmp/actionlint.dl -C $HOME/.local/bin actionlint 2>/dev/null || cp /tmp/actionlint.dl $HOME/.local/bin/actionlint) && chmod +x $HOME/.local/bin/actionlint && export PATH=$HOME/.local/bin:$PATH && actionlint",
+          "tool": "actionlint",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "",
+          "env": {},
+          "id": "lint-s6",
+          "name": "Install shellcheck",
+          "run": "sudo apt-get update && sudo apt-get install -y shellcheck",
+          "tool": "shellcheck",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "hashFiles('**/*.sh') != ''",
+          "env": {},
+          "id": "lint-s7",
+          "name": "Run shellcheck",
+          "run": "git ls-files '*.sh' | xargs -r shellcheck",
+          "tool": "shellcheck",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "",
+          "env": {},
+          "id": "lint-s8",
+          "name": "Install yamllint",
+          "run": "pip install yamllint==1.35.0",
+          "tool": "yamllint",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "lint",
+          "condition": "",
+          "env": {},
+          "id": "lint-s9",
+          "name": "Run yamllint",
+          "run": "yamllint .",
+          "tool": "yamllint",
+          "uses": "",
+          "with_args": {}
+        }
+      ]
+    },
+    {
+      "artifacts": [],
+      "environment": "",
+      "id": "test",
+      "name": "Test",
+      "needs": [
+        "lint"
+      ],
+      "permissions": {
+        "contents": "read"
+      },
+      "runs_on": "ubuntu-latest",
+      "steps": [
+        {
+          "capability": "",
+          "condition": "",
+          "env": {},
+          "id": "test-s1",
+          "name": "Checkout",
+          "run": "",
+          "tool": "",
+          "uses": "actions/checkout@v4",
+          "with_args": {}
+        },
+        {
+          "capability": "",
+          "condition": "",
+          "env": {},
+          "id": "test-s2",
+          "name": "Set up node",
+          "run": "",
+          "tool": "setup",
+          "uses": "actions/setup-node@v4",
+          "with_args": {
+            "ecosystem": "node",
+            "node-version": "20",
+            "version": "20"
+          }
+        },
+        {
+          "capability": "",
+          "condition": "",
+          "env": {},
+          "id": "test-s3",
+          "name": "Install dependencies",
+          "run": "npm ci",
+          "tool": "",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "test",
+          "condition": "",
+          "env": {},
+          "id": "test-s4",
+          "name": "Install jest",
+          "run": "npm install --save-dev jest@29.7.0",
+          "tool": "jest",
+          "uses": "",
+          "with_args": {}
+        },
+        {
+          "capability": "test",
+          "condition": "",
+          "env": {},
+          "id": "test-s5",
+          "name": "Run jest",
+          "run": "npx jest --ci",
+          "tool": "jest",
+          "uses": "",
+          "with_args": {}
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "context_hash": "097a14be05352e9792f9dd509d8e0066974f670b6bd9c880628a7e375996969e",
+    "generator": "ci-agent",
+    "notes": [
+      "tool 'eslint' uses snapshot data \u2014 refresh recommended",
+      "tool 'actionlint' uses snapshot data \u2014 refresh recommended",
+      "tool 'shellcheck' uses snapshot data \u2014 refresh recommended",
+      "tool 'jest' uses snapshot data \u2014 refresh recommended"
+    ],
+    "plan_hash": "9c5fbaa16056c86b565192fb4b90a5b63f0f09605f7401ed0102616197730c5c"
+  },
+  "name": "ci",
+  "permissions": {
+    "contents": "read"
+  },
+  "platform": "github",
+  "triggers": {
+    "pull_request": {
+      "branches": [
+        "main"
+      ]
+    },
+    "push": {
+      "branches": [
+        "main"
+      ]
+    }
+  },
+  "version": "1.0"
+}

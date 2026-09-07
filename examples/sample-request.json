@@ -1,0 +1,13 @@
+{
+  "repo_url": "https://github.com/example/python-api",
+  "request": "Create GitHub Actions CI for this Python API. Run tests, linting and security checks. Do not use Semgrep.",
+  "options": {
+    "platform": "github",
+    "revision": "",
+    "publish": false,
+    "target_branch": "",
+    "base_branch": "",
+    "pr_title": "",
+    "require_approval": false
+  }
+}

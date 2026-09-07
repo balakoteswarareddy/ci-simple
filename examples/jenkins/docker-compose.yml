@@ -1,0 +1,20 @@
+# Ephemeral Jenkins controller for replaying agent-generated Jenkinsfiles.
+# See docs/JENKINS_TESTING.md. Never point this at a production controller.
+name: ci-agent-jenkins-harness
+
+services:
+  controller:
+    image: jenkins/jenkins:2.516.1-lts-jdk21
+    restart: "no"
+    environment:
+      JAVA_OPTS: -Djenkins.install.runSetupWizard=false
+      JENKINS_ADMIN_ID: admin
+      JENKINS_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - ./replay.sh:/usr/share/jenkins/replay.sh:ro
+
+volumes:
+  jenkins-home:
