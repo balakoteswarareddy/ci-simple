@@ -8,6 +8,9 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5173,
+    // Allow the sandboxed browser-preview proxy ( *.e2b.app ) in addition to
+    // localhost; without this Vite 403s the preview with "host not allowed".
+    allowedHosts: ["localhost", ".e2b.app"],
     proxy: {
       "/api": "http://localhost:8000",
       "/healthz": "http://localhost:8000",

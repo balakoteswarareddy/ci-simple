@@ -20,8 +20,9 @@ ui/dist/
 ui/.vite/
 npm-debug.log*
 
-# Data / runtime (never commit)
-data/
+# Data / runtime (never commit). Root-anchored: source trees contain their own
+# data/ dirs (e.g. knowledge seed JSON) that MUST be committed.
+/data/
 *.db
 *.db-journal
 *.sqlite*
