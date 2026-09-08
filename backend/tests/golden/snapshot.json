@@ -1,0 +1,526 @@
+[
+  {
+    "capabilities": [
+      "lint",
+      "format"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "python"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install ruff==0.4.0",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "8bb144c8a1203396741b6e669e4c6fa83c4b2e8a4803e27d0c6d9a49a3870522",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://docs.astral.sh/ruff/"
+    },
+    "tool": "ruff",
+    "versions": [
+      "0.4.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.55,
+    "ecosystems": [
+      "python"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install flake8==7.0.0",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "e48a8b4357cce0bbffa25b35e502430f23630f64b7729760612d690ab9b66a6d",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://flake8.pycqa.org/"
+    },
+    "tool": "flake8",
+    "versions": [
+      "7.0.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "node"
+    ],
+    "install_methods": [
+      {
+        "command": "npm install --save-dev eslint@9.0.0",
+        "type": "npm"
+      }
+    ],
+    "record_hash": "b3f59cac6ce89f36e9306a96d5b77186964f267b2742cd4921eafdc02e4877c6",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://eslint.org/docs/latest/"
+    },
+    "tool": "eslint",
+    "versions": [
+      "9.0.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "test"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.65,
+    "ecosystems": [
+      "python"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install pytest==8.2.0",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "d2f8d3a81f2a9a4ce872c23b38fa0017bd5ca09b8f16fbd62467184557ade210",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://docs.pytest.org/en/stable/"
+    },
+    "tool": "pytest",
+    "versions": [
+      "8.2.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "test"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.65,
+    "ecosystems": [
+      "node"
+    ],
+    "install_methods": [
+      {
+        "command": "npm install --save-dev jest@29.7.0",
+        "type": "npm"
+      }
+    ],
+    "record_hash": "b0e2b3ffe627366cc8a8644a8c883e64d3592a6e7f0e2e2264224b49a2851002",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://jestjs.io/docs/getting-started"
+    },
+    "tool": "jest",
+    "versions": [
+      "29.7.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "sast"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install semgrep==1.45.0",
+        "type": "pip"
+      },
+      {
+        "command": "https://semgrep.dev/docs/getting-started/",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "cb5136da6153de81618d4bc6f3dc30a192e85680078ae2cc8be00bb8cd22e290",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://semgrep.dev/docs/"
+    },
+    "tool": "semgrep",
+    "versions": [
+      "1.45.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "sast"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "python"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install bandit==1.7.5",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "f4d5bea02f2d6f466625b1a660c1751b1f1f4e1464560c8ae8977928b1df485b",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://bandit.readthedocs.io/en/latest/"
+    },
+    "tool": "bandit",
+    "versions": [
+      "1.7.5"
+    ]
+  },
+  {
+    "capabilities": [
+      "secrets"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz",
+        "type": "binary"
+      },
+      {
+        "command": "gitleaks/gitleaks-action@v2",
+        "type": "action"
+      }
+    ],
+    "record_hash": "4245a35368ef89f83350775abbc28d87424efe9045fd07e8b5270824a07d4bb0",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://github.com/gitleaks/gitleaks"
+    },
+    "tool": "gitleaks",
+    "versions": [
+      "8.18.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "secrets"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.55,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "https://github.com/trufflesecurity/trufflehog/releases/download/v3.82.0/trufflehog_3.82.0_linux_amd64.tar.gz",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "e3ae3b052518a7cbe5ade899b33102a90f390b1853785124b2cd745251aaddfe",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://github.com/trufflesecurity/trufflehog"
+    },
+    "tool": "trufflehog",
+    "versions": [
+      "3.82.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "sca"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "go install github.com/google/osv-scanner/cmd/osv-scanner@v1.8.0",
+        "type": "go"
+      },
+      {
+        "command": "https://github.com/google/osv-scanner/releases",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "e527536653e7f6bf47cd4696d6ac602a7a8872ea3f200e577d9144c6fc688f3e",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://google.github.io/osv-scanner/"
+    },
+    "tool": "osv-scanner",
+    "versions": [
+      "1.8.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "sca"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "python"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install pip-audit==2.7.0",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "565b8003686705cc85ced7314be17bc483f2179fdbcfa0e99e56595c2fbde661",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://pip-audit.readthedocs.io/"
+    },
+    "tool": "pip-audit",
+    "versions": [
+      "2.7.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions"
+    ],
+    "confidence": 0.65,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "7601667cdefc4b1a143e7e766df1b02cf36d64eb61a7d87732659da4bed08114",
+    "source": {
+      "evidence": [
+        "validates generated github workflows in this agent"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://github.com/rhysd/actionlint"
+    },
+    "tool": "actionlint",
+    "versions": [
+      "1.7.7"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "sudo apt-get update && sudo apt-get install -y shellcheck",
+        "type": "apt"
+      },
+      {
+        "command": "https://github.com/koalaman/shellcheck/releases/download/v0.9.0/shellcheck-v0.9.0.linux.x86_64.tar.xz",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "de08d91feccc311e07a24daaf5cdb4154bef1822931e0fc1c5b71757435c6039",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://www.shellcheck.net/"
+    },
+    "tool": "shellcheck",
+    "versions": [
+      "0.9.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "docker"
+    ],
+    "install_methods": [
+      {
+        "command": "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64",
+        "type": "binary"
+      }
+    ],
+    "record_hash": "bc246fdee7a01c9b574539a75bbd88e35166fb7e154ae89a5a819d9eacbc1edc",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://github.com/hadolint/hadolint"
+    },
+    "tool": "hadolint",
+    "versions": [
+      "2.12.0"
+    ]
+  },
+  {
+    "capabilities": [
+      "lint"
+    ],
+    "ci_integrations": [
+      "github-actions",
+      "gitlab",
+      "azure-pipelines",
+      "jenkins"
+    ],
+    "confidence": 0.6,
+    "ecosystems": [
+      "any"
+    ],
+    "install_methods": [
+      {
+        "command": "pip install yamllint==1.35.0",
+        "type": "pip"
+      }
+    ],
+    "record_hash": "49998e8dd42e6692625721edd62c1215032a33996c05dbad6d6118019b6b8a3d",
+    "source": {
+      "evidence": [
+        "curated seed record - refresh via knowledge ingest"
+      ],
+      "retrieved_at": "2025-06-01 00:00:00+00:00",
+      "source_type": "snapshot",
+      "url": "https://yamllint.readthedocs.io/"
+    },
+    "tool": "yamllint",
+    "versions": [
+      "1.35.0"
+    ]
+  }
+]

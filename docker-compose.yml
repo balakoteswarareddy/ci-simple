@@ -1,0 +1,135 @@
+# =====================================================================
+# CI Agent — full local stack (PDF §4 modular monolith + §10 prod controls)
+# Services: postgres (evidence), redis (cache), opa (policy), api, ui,
+#           prometheus (optional `monitoring` profile).
+# Every service and its whole config is documented in LOCAL_SERVICES.md.
+# =====================================================================
+name: ci-agent
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ciagent}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ciagent-dev-pw}
+      POSTGRES_DB: ${POSTGRES_DB:-ciagent}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ciagent} -d ${POSTGRES_DB:-ciagent}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks:
+      - backend
+
+  opa:
+    image: openpolicyagent/opa:1.0.0
+    restart: unless-stopped
+    # NOTE: no container healthcheck — the OPA image is a bare static binary
+    # (no shell/curl). The API retries OPA at startup and /readyz reports it.
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - --config-file=/config/opa-config.yaml
+      - /store
+    volumes:
+      - ./deploy/opa/store:/store:ro
+      - ./deploy/opa/config.yaml:/config/opa-config.yaml:ro
+    ports:
+      - "8181:8181"
+    networks:
+      - backend
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      opa:
+        condition: service_started
+    environment:
+      CI_AGENT_ENV: ${CI_AGENT_ENV:-dev}
+      CI_AGENT_DATA_DIR: /var/lib/ci-agent/data
+      CI_AGENT_API_KEY: ${CI_AGENT_API_KEY:-}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-ciagent}:${POSTGRES_PASSWORD:-ciagent-dev-pw}@db:5432/${POSTGRES_DB:-ciagent}
+      REDIS_URL: redis://redis:6379/0
+      OPA_URL: http://opa:8181
+      OPA_BUNDLE_DIR: /opt/ci-agent/policy-store
+      LLM_PROVIDER: ${LLM_PROVIDER:-}
+      FOUNDRY_ENDPOINT: ${FOUNDRY_ENDPOINT:-}
+      FOUNDRY_API_KEY: ${FOUNDRY_API_KEY:-}
+      FOUNDRY_DEPLOYMENT: ${FOUNDRY_DEPLOYMENT:-gpt-4o-mini}
+      FOUNDRY_API_VERSION: ${FOUNDRY_API_VERSION:-2024-10-21}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      ALLOWED_GIT_HOSTS: ${ALLOWED_GIT_HOSTS:-github.com}
+      SANDBOX_MODE: ${SANDBOX_MODE:-local}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_FORMAT: ${LOG_FORMAT:-json}
+    volumes:
+      - agent-work:/var/lib/ci-agent/work
+      - agent-data:/var/lib/ci-agent/data
+      - ./deploy/opa/store:/opt/ci-agent/policy-store:ro
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+      - frontend
+
+  ui:
+    build: ./ui
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    networks:
+      - frontend
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    profiles: ["monitoring"]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    volumes:
+      - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - promdata:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  pgdata:
+  redisdata:
+  agent-work:
+  agent-data:
+  promdata:

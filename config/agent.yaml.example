@@ -1,0 +1,41 @@
+# CI Agent — static YAML config template (optional).
+# Environment variables (see .env.example) take precedence over this file.
+# Point the API at it with CI_AGENT_CONFIG_FILE=/path/to/agent.yaml.
+agent:
+  name: ci-agent
+  max_repair_attempts: 3
+  default_platform: github
+  require_approval_default: false   # high-risk runs ALWAYS require approval
+
+discovery:
+  clone_depth: 50
+  clone_timeout_seconds: 120
+
+knowledge:
+  cache_ttl_hours: 24
+  max_sources_per_capability: 5
+
+policy:
+  decision_path: ciagent/policy/decision
+  timeout_seconds: 10
+
+sandbox:
+  mode: local
+  timeout_seconds: 600
+  allow_network: false
+  allowed_commands:
+    - git
+    - python
+    - python3
+    - pytest
+    - pip
+    - node
+    - npm
+    - go
+    - cargo
+    - syft
+    - cosign
+    - actionlint
+    - gitleaks
+    - trivy
+    - semgrep

@@ -1,0 +1,100 @@
+# CI for the agent itself (PDF Phase 0: "CI for the agent itself").
+name: agent-ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend
+        run: |
+          pip install -r backend/requirements.txt
+          pip install -e backend/
+      - name: Unit + golden + security tests
+        env:
+          ALLOW_LOCAL_REPOS: "true"
+        run: pytest backend/tests/unit backend/tests/golden backend/tests/security -q
+      - name: Integration tests (local evaluator, fixture repos)
+        env:
+          ALLOW_LOCAL_REPOS: "true"
+        run: pytest backend/tests/integration -q
+
+  ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+      - name: Build UI
+        run: |
+          cd ui
+          npm ci --no-audit --no-fund
+          npm run build
+
+  policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OPA
+        run: |
+          curl -sSfL -o /usr/local/bin/opa https://openpolicyagent.org/downloads/v1.0.0/opa_linux_amd64_static
+          chmod +x /usr/local/bin/opa
+      - name: Check Rego bundle
+        run: opa check ./deploy/opa/store
+      - name: Policy unit tests
+        run: opa test ./deploy/opa/store -v
+      - name: Live decision check (verifies data mounting end-to-end)
+        run: |
+          opa run --server --addr localhost:8181 ./deploy/opa/store &
+          OPA_PID=$!
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:8181/health && break
+            sleep 1
+          done
+          curl -sf http://localhost:8181/v1/data/approved/tools | grep -q '"ruff"'
+          DECISION=$(curl -sf -X POST http://localhost:8181/v1/data/ciagent/policy/decision \
+            -H 'Content-Type: application/json' \
+            -d '{"input":{"intent":{"platform":"github","capabilities":["lint"],"prohibited_tools":[],"target_branch":"feature/x","deployment_target":"","publish":false},"plan":{"tools":[{"name":"ruff","version":"0.4.0","capability":"lint"}],"actions":[{"uses":"actions/checkout@v4","pinned":true}],"permissions":{"contents":"read"},"licenses":["MIT"],"has_deploy_job":false,"touches_security":false,"removes_security":false,"cloud_oidc":false},"repo":{"default_branch":"main","is_fork":false},"risk":{"level":"low"}}}' \
+            | python3 -c "import json,sys; print(json.load(sys.stdin)['result']['decision'])")
+          kill $OPA_PID
+          echo "decision=$DECISION"
+          test "$DECISION" = "ALLOW"
+
+  workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install actionlint
+        run: |
+          curl -sSfL -o actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz
+          tar -xzf actionlint.tar.gz -C /usr/local/bin actionlint
+      - name: Lint workflows
+        run: actionlint .github/workflows/*.yml
+
+  compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate compose file
+        run: docker compose config --quiet && echo "compose OK"

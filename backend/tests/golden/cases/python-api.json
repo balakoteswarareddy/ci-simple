@@ -1,0 +1,9 @@
+{
+  "name": "python-api",
+  "repo": "sample-python",
+  "request": "Create GitHub Actions CI for this Python API. Run tests, linting and security checks. Do not use Semgrep.",
+  "options": {"platform": "github", "publish": false},
+  "snapshot": "snapshot.json",
+  "expected_ir": "python-api.ir.json",
+  "expected_renders": {"github": "python-api.github.yml", "jenkins": "python-api.Jenkinsfile"}
+}

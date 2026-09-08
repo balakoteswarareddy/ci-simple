@@ -1,0 +1,17 @@
+# OPA server config — decision logs to console so policy denials are auditable.
+services:
+  acmecorp:
+    url: https://example.com/control-plane
+    # Placeholder: wire your real control plane here for bundle/status APIs.
+    # The local ./store directory is authoritative until then.
+
+decision_logs:
+  console: true
+  drop_decision: "data.ciagent.policy.drop_decision"
+
+status:
+  console: true
+
+server:
+  decision_logs:
+    console: true
